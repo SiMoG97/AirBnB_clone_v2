@@ -131,7 +131,6 @@ class HBNBCommand(cmd.Cmd):
             return
 
         args = line.split()
-        # print(args)
 
         if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
@@ -156,7 +155,7 @@ class HBNBCommand(cmd.Cmd):
 
         new_instance = HBNBCommand.classes[args[0]]()
         new_instance.__dict__.update(**newObj)
-        # storage.save()
+
         print(new_instance.id)
         storage.save()
 
@@ -355,6 +354,14 @@ class HBNBCommand(cmd.Cmd):
         print("Usage: update <className> <id> <attName> <attVal>\n")
 
     def is_numeric(self, input_str):
+        """Chacks if the input_str is a number or not
+
+        Args:
+            input_str (str): The input to check
+
+        Returns:
+            Boolean: True of False
+        """
         try:
             float(input_str)
             return True
@@ -362,6 +369,14 @@ class HBNBCommand(cmd.Cmd):
             return False
 
     def to_number(self, input_str):
+        """Converts a  string number to inr or float number
+
+        Args:
+            input_str (str): the string number to convert
+
+        Returns:
+            (int | float): the converted number 
+        """
         try:
             number = int(input_str)
             return number
