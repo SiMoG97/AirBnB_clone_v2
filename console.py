@@ -377,7 +377,7 @@ class HBNBCommand(cmd.Cmd):
             input_str (str): the string number to convert
 
         Returns:
-            (int | float): the converted number 
+            (int | float): the converted number
         """
         try:
             number = int(input_str)

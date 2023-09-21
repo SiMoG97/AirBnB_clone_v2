@@ -18,7 +18,7 @@ class DBStorage:
     __session = None
 
     def __init__(self):
-        """ 
+        """_summary_
         """
         user = getenv("HBNB_MYSQL_USER")
         password = getenv("HBNB_MYSQL_PWD")
@@ -26,7 +26,8 @@ class DBStorage:
         db_name = getenv("HBNB_MYSQL_DB")
 
         self.__engine = create_engine(
-            f'mysql+mysqldb://{user}:{password}@{host}/{db_name}', pool_pre_ping=True)
+            f'mysql+mysqldb://{user}:{password}@{host}/{db_name}',
+            pool_pre_ping=True)
 
         if getenv("HBNB_ENV") == "test":
             Base.metadata.drop.all(self.__engine)
@@ -61,7 +62,7 @@ class DBStorage:
 
     def delete(self, obj=None):
         """Deletes an obj from the database"""
-        if obj == None:
+        if obj is None:
             return
         self.__session.delete(obj)
 
