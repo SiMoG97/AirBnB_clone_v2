@@ -40,8 +40,7 @@ class DBStorage:
         Returns:
             _type_: _description_
         """
-        # classes = [State, City, User, Amenity, Review, Place]
-        classes = [State, City, User, Place, Review]
+        classes = [State, City, User, Place, Review, Amenity]
         objects = {}
         if cls:
             classes = [cls]
