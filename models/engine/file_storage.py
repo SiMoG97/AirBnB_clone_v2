@@ -27,6 +27,7 @@ class FileStorage:
 
     def save(self):
         """Saves storage dictionary to file"""
+        # print(dir(self.__dict__))
         with open(FileStorage.__file_path, 'w') as f:
             temp = {}
             temp.update(FileStorage.__objects)

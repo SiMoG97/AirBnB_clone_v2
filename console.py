@@ -4,6 +4,7 @@ import cmd
 import sys
 
 from models.__init__ import storage
+# from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
 from models.city import City
@@ -141,7 +142,8 @@ class HBNBCommand(cmd.Cmd):
             try:
                 [key, value] = args[i].split("=")
 
-                if not self.is_numeric(value) and (value[0] != '"' or value[-1] != '"'):
+                if (not self.is_numeric(value) and
+                        (value[0] != '"' or value[-1] != '"')):
                     continue
 
                 if self.is_numeric(value):
@@ -150,14 +152,15 @@ class HBNBCommand(cmd.Cmd):
                     value = value[1:-1].replace("_", " ").replace('"', '\\"')
 
                 newObj[key] = value
-            except:
+            except IndexError:
                 continue
 
-        new_instance = HBNBCommand.classes[args[0]]()
-        new_instance.__dict__.update(**newObj)
+        new_instance = HBNBCommand.classes[args[0]](**newObj)
+        # new_instance.__dict__.update(**newObj)
+        # print(new_instance.__dict__)
 
         print(new_instance.id)
-        storage.save()
+        new_instance.save()
 
     def help_create(self):
         """Help information for the create method"""
@@ -233,17 +236,16 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """Shows all objects, or all objects of a class"""
         print_list = []
-
         if args:
             args = args.split(" ")[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split(".")[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
