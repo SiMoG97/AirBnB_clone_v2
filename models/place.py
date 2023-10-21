@@ -8,7 +8,7 @@ import models
 from models.review import Review
 from models.amenity import Amenity
 
-association_table = Table(
+place_amenity = Table(
     "place_amenity",
     Base.metadata,
     Column(
@@ -43,13 +43,12 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
 
-    reviews = relationship("Review", backref="place", cascade="delete")
-    amenities = relationship(
-        "Amenity",
-        secondary="place_amenity",
-        viewonly=False,
-        overlaps="place_amenities"
-    )
+    amenities = relationship("Amenity",
+                             secondary=place_amenity,
+                             viewonly=False,
+                             back_populates="place_amenities"
+                             )
+    reviews = relationship('Review', cascade="all,delete", backref="place")
     amenity_ids = []
 
     if getenv("HBNB_TYPE_STORAGE") != "db":
