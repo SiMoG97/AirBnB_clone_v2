@@ -3,8 +3,9 @@
 from flask import Flask, render_template
 from models import storage
 from models.state import State
+from models.city import City
+from os import getenv
 
-# storage.all(...)
 
 app = Flask(__name__)
 
@@ -15,13 +16,12 @@ def teardown_storage(exception=None):
     storage.close()
 
 
-@app.route("/states_list",  strict_slashes=False)
-def states_list():
-    """shows an html page with a list of states"""
+@app.route("/cities_by_states",  strict_slashes=False)
+def cities_by_states():
+    """shows an html page with a list of states and their cities"""
+    states = storage.all(State).values()
 
-    states = sorted(list(storage.all(State).values()), key=lambda
-                    x: x.name)
-    return render_template("7-states_list.html", states=states)
+    return render_template("8-cities_by_states.html", states=states)
 
 
 if __name__ == '__main__':
